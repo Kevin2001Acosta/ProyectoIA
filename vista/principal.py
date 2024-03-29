@@ -65,7 +65,7 @@ espacioVacio2.set_colorkey(BLANCO)
 imagenes = {0: muro2,1: espacioVacio2,
             2: espacioVacioRight, 3: espacioVacioLeft,
             4: espacioVacioBottom, 5: espacioVacioTop,
-            6: shuriken}
+            6: shuriken, 7: ninja_stop}
 #  Inicializar el reloj
 reloj = pygame.time.Clock()
 
@@ -75,7 +75,6 @@ def recarga_pantalla():
     PANTALLA.blit(paisaje, (0, 0))
     for (fila, columna), valor in np.ndenumerate(matriz):
         PANTALLA.blit(imagenes[valor], (columna * 60, fila * 60))
-    PANTALLA.blit(ninja_stop, (9 * 60, 8 * 60))
     pygame.display.update()
 
 
