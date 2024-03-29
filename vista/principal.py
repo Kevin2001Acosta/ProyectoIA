@@ -1,4 +1,5 @@
 # leer matriz de un txt
+from modelo.Nodo import nodo
 import numpy as np
 import pygame
 import sys
@@ -14,6 +15,9 @@ print(nodo.x)
 #  print(matriz[0][0])
 num = 3
 numero = 5-num
+
+#print(Busqueda_Amplitud.busqueda_amplitud(matriz))
+#
 
 #  Inicializar Pygame
 pygame.init()
