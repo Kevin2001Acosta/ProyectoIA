@@ -18,6 +18,8 @@ class nodo:
     
     def generar_hijos(self):
         
+        #falta tomar medidas para el padre si hay muros o el otro cosito
+        
         hijos =[]
         def crear_hijo(hijox, hijoy):
         
@@ -36,25 +38,25 @@ class nodo:
         #hijos de arriba        
         x = self.x
         y = self.y - 1
-        if self.matriz[x][y] == 0 and self.matriz[x][y] == 4:
+        if not(self.matriz[x][y] == 0 or self.matriz[x][y] == 4):
             crear_hijo(x, y)
         
         #hijos de la derecha
         x = self.x + 1
         y = self.y 
-        if self.matriz[x][y] == 0 and self.matriz[x][y] == 3:
+        if not(self.matriz[x][y] == 0 or self.matriz[x][y] == 3):
             crear_hijo(x, y)
 
         #hijos de abajo
         x = self.x
         y = self.y + 1
-        if self.matriz[x][y] == 0 and self.matriz[x][y] == 5:
+        if not(self.matriz[x][y] == 0 or self.matriz[x][y] == 5):
             crear_hijo(x, y)
         
         #hijos de la izquierda
         x = self.x - 1
         y = self.y
-        if self.matriz[x][y] == 0 and self.matriz[x][y] == 2:
+        if not(self.matriz[x][y] == 0 or self.matriz[x][y] == 2):
             crear_hijo(x, y)
         
         
