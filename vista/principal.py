@@ -4,19 +4,15 @@ import numpy as np
 import pygame
 import sys
 from pygame.locals import *
-from modelo.Nodo import nodo
+from modelo.Busqueda_Amplitud import busqueda_amplitud
 
 
 # Leer el archivo de texto y convertirlo en una matriz
 
 matriz = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-nodo = nodo(matriz, 1, 2)
-print(nodo.x)
 #  print(matriz[0][0])
-num = 3
-numero = 5-num
-
-#print(Busqueda_Amplitud.busqueda_amplitud(matriz))
+matriz2 = matriz.copy()
+print(busqueda_amplitud(matriz2))
 #
 
 #  Inicializar Pygame
