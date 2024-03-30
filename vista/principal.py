@@ -12,7 +12,6 @@ matriz = np.loadtxt('../matrices/matriz1.txt', dtype=int)
 #  print(matriz[0][0])
 matriz2 = matriz.copy()
 print(Busqueda_Amplitud.busqueda_amplitud(matriz2))
-#
 
 #  Inicializar Pygame
 pygame.init()
