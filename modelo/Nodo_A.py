@@ -1,7 +1,7 @@
 
 
 class Nodo:
-    def __init__(self, matriz, x, y, recorrido, marcados, heuristica, costo):
+    def __init__(self, matriz, x, y, recorrido, marcados, heuristica, costo, pos_shuriken):
         self.matriz = matriz
         self.x = x
         self.y = y
@@ -10,6 +10,7 @@ class Nodo:
         self.heuristica = heuristica
         self.costo = costo
         self.f = self.heuristica + self.costo
+        self.pos_shuriken = pos_shuriken
 
     def verificar_ganar(self):
         return self.matriz[self.x, self.y] == 6
@@ -24,15 +25,9 @@ class Nodo:
             tupla = (self.x, self.y)
             lista_marcados.append(tupla)
             if not (hijox, hijoy) in lista_marcados:
-                hijo = Nodo(
-                    self.matriz,
-                    hijox,
-                    hijoy,
-                    self.recorrido + [(hijox, hijoy)],
-                    lista_marcados,
-                    abs(hijox - 0) + abs(hijoy - 0),
-                    self.costo + 1
-                )
+                hijo = Nodo(self.matriz, hijox, hijoy, self.recorrido + [(hijox, hijoy)], lista_marcados,
+                            abs(hijox - self.pos_shuriken[0]) + abs(hijoy - self.pos_shuriken[1]), self.costo + 1,
+                            self.pos_shuriken)
                 hijos.append(hijo)
 
         # hijos de arriba
@@ -66,6 +61,5 @@ class Nodo:
             if not (self.matriz[x][y] == 0 or self.matriz[x][y] == 2):
                 print('hijo de izquierda de: ', self.x, self.y, (x, y))
                 crear_hijo(x, y)
-                
         return hijos
 
