@@ -1,7 +1,7 @@
 
 
 class Nodo:
-    def _init_(self, matriz, x, y, recorrido, marcados, heuristica, costo):
+    def __init__(self, matriz, x, y, recorrido, marcados, heuristica, costo):
         self.matriz = matriz
         self.x = x
         self.y = y
@@ -66,4 +66,6 @@ class Nodo:
             if not (self.matriz[x][y] == 0 or self.matriz[x][y] == 2):
                 print('hijo de izquierda de: ', self.x, self.y, (x, y))
                 crear_hijo(x, y)
+                
+        return hijos
 

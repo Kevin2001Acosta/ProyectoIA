@@ -4,21 +4,24 @@ import pygame
 import sys
 from pygame.locals import *
 from modelo import Busqueda_Amplitud
+from modelo import Busqueda_A
+
 
 
 # Leer el archivo de texto y convertirlo en una matriz
 
-matriz = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-#  print(matriz[0][0])
+matriz = np.loadtxt('./matrices/matriz1.txt', dtype=int)
+
 matriz2 = matriz.copy()
-print(Busqueda_Amplitud.busqueda_amplitud(matriz2))
-#
+matriz3 = matriz.copy()
+
+
 
 #  Inicializar Pygame
 pygame.init()
 
-# paleta de colores
 
+# paleta de colores
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
 AZUL = (0, 0, 255)
@@ -28,41 +31,232 @@ AZULCLARO = (41, 197, 255)
 PURPURA = (186, 2, 255)
 AMARILLO = (255, 234, 56)
 GRIS = (155, 155, 155)
+COLOR = (210, 180, 140)
+COLOR2 = (154, 122, 83)
+
 
 # Configurar la PANTALLA
-ANCHO = 1000
-ALTO = 700
+ANCHO = 900
+ALTO = 600
 PANTALLA = pygame.display.set_mode((ANCHO, ALTO))
-pygame.display.set_caption('El Ninja')
+pygame.display.set_caption('Buscando el Shuringan por BFS y A*')
 
-ninja_stop = pygame.transform.scale(pygame.image.load('../imagenes/ninja-stop.jpg'), (60, 60))
+fuente = pygame.font.SysFont("Century Gothic", 21, bold=True)
+text = fuente.render("BÚSQUEDA POR AMPLITUD", True, NEGRO)
+text3 = fuente.render("BÚSQUEDA POR A*", True, NEGRO)
+
+
+ninja_icon = pygame.transform.scale(pygame.image.load('./imagenes/ninja-icon.png'), (60, 60))
 # icono del juego
-pygame.display.set_icon(ninja_stop)
+pygame.display.set_icon(ninja_icon)
 
-caminaDerecha = [pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right1.jpg'), (60, 60)),
-                 pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right2.jpg'), (60, 60)),
-                 pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right3.jpg'), (60, 60))]
 
-caminaIzquierda = [pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left1.jpg'), (60, 60)),
-                   pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left2.jpg'), (60, 60)),
-                   pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left3.jpg'), (60, 60))]
+#ninja
 
-shuriken = pygame.transform.scale(pygame.image.load('../imagenes/shuriken.png'), (60, 60))
+caminaDerecha = [pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right1.png'), (60, 60)),
+                 pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right2.png'), (60, 60)),
+                 pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right3.png'), (60, 60))]
 
-paisaje = pygame.transform.scale(pygame.image.load('../imagenes/paisajeNinja.jpg'), (600, 600))
+caminaIzquierda = [pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left1.png'), (60, 60)),
+                   pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left2.png'), (60, 60)),
+                   pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left3.png'), (60, 60))]
 
-muro2 = pygame.transform.scale(pygame.image.load('../imagenes/muro2.jpg'), (60, 60))
-espacioVacioBottom = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-bottom.png'), (60, 60))
-espacioVacioTop = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-top.png'), (60, 60))
-espacioVacioLeft = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-left.png'), (60, 60))
-espacioVacioRight = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-right.png'), (60, 60))
+ninja_stop = pygame.transform.scale(pygame.image.load('./imagenes/ninja-stop.png'), (60, 60))
+ninja_salto = pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60))
+
+
+shuriken = pygame.transform.scale(pygame.image.load('./imagenes/shuriken.png'), (60, 60))
+
+paisaje = pygame.transform.scale(pygame.image.load('./imagenes/paisajeNinja.png'), (600, 600)).convert()
+
+muro2 = pygame.transform.scale(pygame.image.load('./imagenes/muro2.jpg'), (60, 60))
+
+espacioVacioBottom = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-bottom.png'), (60, 60))
+espacioVacioTop = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-top.png'), (60, 60))
+espacioVacioLeft = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-left.png'), (60, 60))
+espacioVacioRight = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-right.png'), (60, 60))
+
 espacioVacioLeft.set_colorkey(BLANCO)
 espacioVacioRight.set_colorkey(BLANCO)
 espacioVacioTop.set_colorkey(BLANCO)
 espacioVacioBottom.set_colorkey(BLANCO)
 
-espacioVacio2 = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio.png'), (60, 60))
+espacioVacio2 = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio.png'), (60, 60))
 espacioVacio2.set_colorkey(BLANCO)
+
+imagen_boton = pygame.transform.scale( pygame.image.load("./imagenes/boton.png"), (110,80))
+imagen_boton2 = pygame.transform.scale( pygame.image.load("./imagenes/boton.png"), (110,80))
+
+
+# Obtener el rectángulo de la imagen del botón
+rectangulo_boton1 = imagen_boton.get_rect()
+rectangulo_boton1.center = (740,90)
+
+rectangulo_boton2 = imagen_boton2.get_rect()
+rectangulo_boton2.center = (740,215)
+
+texto = ""
+lista_recorrido = []
+
+def pos_ninja():
+    for fila in range(0, matriz.shape[0]):
+        for columna in range(0, matriz.shape[1]):
+            if matriz[fila][columna] == 7:
+                return (fila,columna)
+                break
+ 
+cuenta_pasos = 0           
+def ninja_movimiento():
+    global cuenta_pasos
+    pos_actual_ninja = pos_ninja()
+
+        
+    for i in lista_recorrido:
+        
+
+        #arriba
+        if(i[0]<pos_actual_ninja[0]):
+            matriz[pos_actual_ninja] =1
+            PANTALLA.blit(ninja_salto, pos_actual_ninja)
+            pygame.display.update()
+            reloj.tick(10)
+            pos_actual_ninja = i
+            matriz[pos_actual_ninja] = 7
+            cuenta_pasos += 1
+            
+        #abajo    
+        elif(i[0]>pos_actual_ninja[0]):
+            matriz[pos_actual_ninja] =1
+            PANTALLA.blit(ninja_salto, pos_actual_ninja)
+            pygame.display.update()
+            reloj.tick(10)
+            pos_actual_ninja = i
+            matriz[pos_actual_ninja] = 7
+            cuenta_pasos += 1
+            
+        #derecha
+        elif(i[1]>pos_actual_ninja[1]):
+            matriz[pos_actual_ninja] =1
+            PANTALLA.blit(caminaDerecha[cuenta_pasos//1], pos_actual_ninja)
+            pygame.display.update()
+            reloj.tick(10)
+            pos_actual_ninja = i
+            matriz[pos_actual_ninja] = 7
+            cuenta_pasos += 1
+            
+        #izquierda
+        elif(i[1]<pos_actual_ninja[1]):
+            matriz[pos_actual_ninja] =1
+            PANTALLA.blit(caminaIzquierda[cuenta_pasos//1], pos_actual_ninja)
+            pygame.display.update()
+            reloj.tick(10)
+            pos_actual_ninja = i
+            matriz[pos_actual_ninja] = 7
+            cuenta_pasos += 1
+            
+        if cuenta_pasos + 1 >=3:
+            cuenta_pasos = 0
+        
+
+        
+        
+        
+# Función para verificar si se hizo clic en el botón
+def verificar_clic(pos_mouse):
+    coordenadas = Busqueda_Amplitud.busqueda_amplitud(matriz2.copy())
+    if rectangulo_boton1.collidepoint(pos_mouse):
+        if(coordenadas != None):
+            lista_recorrido.extend(coordenadas)
+            texto = ", ".join(map(str, coordenadas))
+            ninja_movimiento()
+            return texto
+        else:
+            return "No hay solución"
+    
+    coordenadas = Busqueda_A.busqueda_A(matriz3.copy())   
+    if rectangulo_boton2.collidepoint(pos_mouse):
+        if(coordenadas != None):
+            lista_recorrido.extend(coordenadas) 
+            texto = ", ".join(map(str, coordenadas))
+            ninja_movimiento()
+            return texto
+        else:
+            return "No hay solución"
+    
+    else:
+        return ""
+    
+ 
+def ajustar_texto(texto, fuente, max_width):
+    lineas = []
+    palabras = texto.split(' ')
+    linea_actual = ''
+    for palabra in palabras:
+        test_linea = linea_actual + palabra + ' '
+        if fuente.render(test_linea, True, (0, 0, 0)).get_rect().width < max_width -40:  # Resta 40 para dejar espacio a los lados
+            linea_actual = test_linea
+        else:
+            lineas.append(linea_actual)
+            linea_actual = palabra + ' '
+    lineas.append(linea_actual)
+    return '\n'.join(lineas)
+
+def dividir_texto_en_lineas(texto, max_width):
+    lineas = texto.split('\n')
+    lineas_divididas = []
+    for linea in lineas:
+        palabras = linea.split(' ')
+        linea_actual = ''
+        for palabra in palabras:
+            test_linea = linea_actual + palabra + ' '
+            if fuente.render(test_linea, True, (0, 0, 0)).get_rect().width < max_width :
+                linea_actual = test_linea
+            else:
+                lineas_divididas.append(linea_actual)
+                linea_actual = palabra + ' '
+        lineas_divididas.append(linea_actual)
+    return lineas_divididas       
+        
+def mostrar_texto_y_rectangulo(texto):
+    
+    x, y, width, height = 632, 275, 240, 190
+    
+    tamaño_fuente = 15
+    fuente = pygame.font.SysFont("consolas", tamaño_fuente)
+
+    rectangulo = pygame.Rect(x, y, width, height)
+    pygame.draw.rect(PANTALLA, BLANCO, rectangulo)
+    pygame.draw.rect(PANTALLA, COLOR2, (x, y, width, height))
+
+# Definir las dimensiones del rectángulo interior (para el borde)
+    border_width = 3  # Ancho del borde
+    inner_rect = pygame.Rect(x + border_width, y + border_width, width - 2 * border_width, height - 2 * border_width)
+
+    # Dibujar el rectángulo interior (borde)
+    pygame.draw.rect(PANTALLA, BLANCO, inner_rect)
+
+    # Ajustar el tamaño del texto para que quepa dentro del rectángulo
+    texto_renderizado = ajustar_texto(texto, fuente, rectangulo.width)
+
+    # Calcular las líneas de texto para ajustarlo dentro del rectángulo
+    lineas = dividir_texto_en_lineas(texto_renderizado, rectangulo.width)
+
+    # Mostrar el texto dentro del rectángulo
+    y = rectangulo.top
+
+    for linea in lineas:
+        # Renderizar la línea de texto con la fuente y el tamaño definidos
+        texto = fuente.render(linea, True, NEGRO)
+        
+        # Obtener el rectángulo del texto y centrarlo horizontalmente en el rectángulo blanco
+        texto_rect = texto.get_rect(topleft=(rectangulo.left + 25, y + 10))
+        
+        # Mostrar el texto en la pantalla
+        PANTALLA.blit(texto, texto_rect)
+        
+        # Aumentar la posición y para la siguiente línea
+        y += texto_rect.height  
+
 
 imagenes = {0: muro2, 1: espacioVacio2,
             2: espacioVacioRight, 3: espacioVacioLeft,
@@ -71,12 +265,34 @@ imagenes = {0: muro2, 1: espacioVacio2,
 #  Inicializar el reloj
 reloj = pygame.time.Clock()
 
+cuenta_pasos = 0
 
-def recarga_pantalla():
-    PANTALLA.fill(GRIS)
+def recarga_pantalla(informacion):
+    PANTALLA.fill(COLOR)
     PANTALLA.blit(paisaje, (0, 0))
+    
+        
     for (fila, columna), valor in np.ndenumerate(matriz):
         PANTALLA.blit(imagenes[valor], (columna * 60, fila * 60))
+    
+    for x in range(0, 650, 60):
+        pygame.draw.line(PANTALLA, NEGRO, (x, 0), (x, ALTO))
+    
+    # Dibujar líneas horizontales
+    for y in range(0, 600, 60):
+        pygame.draw.line(PANTALLA, NEGRO, (0, y), (600, y))
+    
+    PANTALLA.blit(text, (620,25))
+    PANTALLA.blit(text3, (650,150))
+    
+    pygame.draw.rect(PANTALLA, AZULCLARO, (0,600,200,200))
+    
+    mostrar_texto_y_rectangulo(informacion)
+
+        
+    PANTALLA.blit(imagen_boton, rectangulo_boton1)
+    PANTALLA.blit(imagen_boton2, rectangulo_boton2)
+        
     pygame.display.update()
 
 
@@ -86,8 +302,12 @@ while ejecuta:
     for evento in pygame.event.get():
         if evento.type == QUIT:
             ejecuta = False
-    recarga_pantalla()
-    reloj.tick(60)
+        elif evento.type == pygame.MOUSEBUTTONDOWN:
+            if evento.button == 1:  # Verificar clic izquierdo del ratón
+                mouse_pos = pygame.mouse.get_pos()
+                texto = verificar_clic(mouse_pos)
+    recarga_pantalla(texto)
+    reloj.tick(10)
 
 pygame.quit()
 sys.exit()

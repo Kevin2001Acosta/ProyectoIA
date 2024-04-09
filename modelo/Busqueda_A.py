@@ -30,14 +30,12 @@ def busqueda_A(matriz):
     while True:
         if len(cola.obtener_nodos()) == 0:
             return None
+        
         nodo_cola = cola.borrar_valor()
+        
         if nodo_cola.verificar_ganar():
             return nodo_cola.recorrido
 
         hijos = nodo_cola.generar_hijos()
         for h in hijos:
             cola.insertar(h)
-
-matriz1 = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-valores = busqueda_A(matriz1)
-print(valores)
