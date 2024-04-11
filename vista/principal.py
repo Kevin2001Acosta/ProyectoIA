@@ -10,10 +10,11 @@ from modelo import Busqueda_A
 # Leer el archivo de texto y convertirlo en una matriz
 
 matriz = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-
+matriz_2 = np.loadtxt('../matrices/matriz2.txt', dtype=int)
+matriz = matriz_2
 matriz2 = matriz.copy()
 matriz3 = matriz.copy()
-
+matriz_original = matriz.copy()
 
 
 #  Inicializar Pygame
@@ -112,9 +113,9 @@ cuenta_pasos = 0
 recorridos_iter = iter(lista_recorrido)
 
 en_movimiento = False
+pos_actual_ninja = pos_ninja()
 def ninja_movimiento():
-    global cuenta_pasos, en_movimiento
-    pos_actual_ninja = pos_ninja()
+    global cuenta_pasos, en_movimiento, pos_actual_ninja
 
     try:
         # Obtener el siguiente movimiento de la lista de recorridos
@@ -126,42 +127,34 @@ def ninja_movimiento():
     velocidad = 3
     # arriba
     if i[0] < pos_actual_ninja[0]:
-        matriz[pos_actual_ninja] = 1
         PANTALLA.blit(camina_arriba_abajo[cuenta_pasos//1], (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60 - (20 * cuenta_pasos)))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
-        matriz[pos_actual_ninja] = 7
         cuenta_pasos += 1
 
     # abajo
     elif i[0] > pos_actual_ninja[0]:
-        matriz[pos_actual_ninja] = 1
         PANTALLA.blit(camina_arriba_abajo[cuenta_pasos//1], (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60 + (20 * cuenta_pasos)))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
-        matriz[pos_actual_ninja] = 7
         cuenta_pasos += 1
 
     # derecha
     elif i[1] > pos_actual_ninja[1]:
-        matriz[pos_actual_ninja] = 1
         PANTALLA.blit(caminaDerecha[cuenta_pasos//1], (pos_actual_ninja[1]*60 + (20 * cuenta_pasos), pos_actual_ninja[0] * 60))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
-        matriz[pos_actual_ninja] = 7
         cuenta_pasos += 1
 
     # izquierda
     elif i[1] < pos_actual_ninja[1]:
-        matriz[pos_actual_ninja] = 1
         PANTALLA.blit(caminaIzquierda[cuenta_pasos//1], (pos_actual_ninja[1]*60 - (20 * cuenta_pasos), pos_actual_ninja[0]*60))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
-        matriz[pos_actual_ninja] = 7
         cuenta_pasos += 1
 
     if cuenta_pasos + 1 >= 3:
@@ -286,8 +279,10 @@ def recarga_pantalla(informacion):
     
         
     for (fila, columna), valor in np.ndenumerate(matriz):
-        PANTALLA.blit(imagenes[valor], (columna * 60, fila * 60))
-    
+        if (fila, columna) == pos_actual_ninja:
+            PANTALLA.blit(ninja_stop, (columna * 60, fila * 60))
+        else:
+            PANTALLA.blit(imagenes[valor], (columna * 60, fila * 60))
     for x in range(0, 650, 60):
         pygame.draw.line(PANTALLA, NEGRO, (x, 0), (x, ALTO))
     

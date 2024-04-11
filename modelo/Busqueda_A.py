@@ -34,7 +34,7 @@ def busqueda_A(matriz):
     nodos_creados = 1
     while True:
         if len(cola.obtener_nodos()) == 0:
-            return None
+            return [None, nodos_expandidos, nodos_creados]
         
         nodo_cola = cola.borrar_valor()
         nodos_expandidos += 1

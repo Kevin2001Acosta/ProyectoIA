@@ -29,7 +29,7 @@ def busqueda_amplitud(matriz):
     while True:
         print(len(cola))
         if len(cola) == 0:
-            return None
+            return [None, nodos_expandidos, nodos_creados]
 
         nodo_cola = cola.pop(0)
         nodos_expandidos += 1
