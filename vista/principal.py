@@ -9,9 +9,9 @@ from modelo import Busqueda_A
 
 # Leer el archivo de texto y convertirlo en una matriz
 
-matriz_1 = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-matriz_2 = np.loadtxt('../matrices/matriz2.txt', dtype=int)
-matriz_3 = np.loadtxt('../matrices/matriz3.txt', dtype=int)
+matriz_1 = np.loadtxt('./matrices/matriz1.txt', dtype=int)
+matriz_2 = np.loadtxt('./matrices/matriz2.txt', dtype=int)
+matriz_3 = np.loadtxt('./matrices/matriz3.txt', dtype=int)
 matriz = matriz_3
 matriz2 = matriz.copy()
 matriz3 = matriz.copy()
