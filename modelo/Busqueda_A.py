@@ -30,23 +30,20 @@ def busqueda_A(matriz):
     )
     cola = Ordenado(clave=lambda nodo: nodo.f)
     cola.insertar(raiz)
-    nodosExpandidos = []
+    nodos_expandidos = 0
+    nodos_creados = 1
     while True:
         if len(cola.obtener_nodos()) == 0:
             return None
         
         nodo_cola = cola.borrar_valor()
-        nodosExpandidos.append((nodo_cola.x, nodo_cola.y))
+        nodos_expandidos += 1
 
         if nodo_cola.verificar_ganar():
-            print(nodosExpandidos)
-            return nodo_cola.recorrido
+            print('busqueda A*', nodos_expandidos, nodos_creados)
+            return nodo_cola.recorrido, nodos_expandidos, nodos_creados
 
         hijos = nodo_cola.generar_hijos()
         for h in hijos:
             cola.insertar(h)
-
-
-matriz1 = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-valores = busqueda_A(matriz1)
-print(valores)
+            nodos_creados += 1

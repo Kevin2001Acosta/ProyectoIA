@@ -24,23 +24,21 @@ def busqueda_amplitud(matriz):
         lista
     )
     cola = [raiz]
-
+    nodos_expandidos = 0
+    nodos_creados = 1
     while True:
         print(len(cola))
         if len(cola) == 0:
             return None
 
         nodo_cola = cola.pop(0)
+        nodos_expandidos += 1
         # print(nodo_cola.x, nodo_cola.y)
         if nodo_cola.verificar_ganar():
-            return nodo_cola.recorrido
+            print('Busqueda Amplitud', nodos_expandidos, nodos_creados)
+            return nodo_cola.recorrido, nodos_expandidos, nodos_creados
 
         hijos = nodo_cola.generar_hijos()
         for h in hijos:
             cola.append(h)
-
-
-# matriz1 = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-
-# valores = busqueda_amplitud(matriz1)
-# print(valores)
+            nodos_creados += 1

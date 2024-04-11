@@ -62,6 +62,9 @@ caminaIzquierda = [pygame.transform.scale(pygame.image.load('../imagenes/ninjas-
 
 ninja_stop = pygame.transform.scale(pygame.image.load('../imagenes/ninja-stop.png'), (60, 60))
 ninja_salto = pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60))
+camina_arriba_abajo = [pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60)),
+                       pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60)),
+                       pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60))]
 
 
 shuriken = pygame.transform.scale(pygame.image.load('../imagenes/shuriken.png'), (60, 60))
@@ -83,8 +86,8 @@ espacioVacioBottom.set_colorkey(BLANCO)
 espacioVacio2 = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio.png'), (60, 60))
 espacioVacio2.set_colorkey(BLANCO)
 
-imagen_boton = pygame.transform.scale( pygame.image.load("../imagenes/boton.png"), (110,80))
-imagen_boton2 = pygame.transform.scale( pygame.image.load("../imagenes/boton.png"), (110,80))
+imagen_boton = pygame.transform.scale(pygame.image.load("../imagenes/boton.png"), (110, 80))
+imagen_boton2 = pygame.transform.scale(pygame.image.load("../imagenes/boton.png"), (110, 80))
 
 
 # Obtener el rectángulo de la imagen del botón
@@ -124,7 +127,7 @@ def ninja_movimiento():
     # arriba
     if i[0] < pos_actual_ninja[0]:
         matriz[pos_actual_ninja] = 1
-        PANTALLA.blit(ninja_salto, (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60))
+        PANTALLA.blit(camina_arriba_abajo[cuenta_pasos//1], (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60 - (20 * cuenta_pasos)))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
@@ -134,7 +137,7 @@ def ninja_movimiento():
     # abajo
     elif i[0] > pos_actual_ninja[0]:
         matriz[pos_actual_ninja] = 1
-        PANTALLA.blit(ninja_salto, (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60))
+        PANTALLA.blit(camina_arriba_abajo[cuenta_pasos//1], (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60 + (20 * cuenta_pasos)))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
@@ -144,7 +147,7 @@ def ninja_movimiento():
     # derecha
     elif i[1] > pos_actual_ninja[1]:
         matriz[pos_actual_ninja] = 1
-        PANTALLA.blit(caminaDerecha[cuenta_pasos//1], (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60))
+        PANTALLA.blit(caminaDerecha[cuenta_pasos//1], (pos_actual_ninja[1]*60 + (20 * cuenta_pasos), pos_actual_ninja[0] * 60))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
@@ -154,7 +157,7 @@ def ninja_movimiento():
     # izquierda
     elif i[1] < pos_actual_ninja[1]:
         matriz[pos_actual_ninja] = 1
-        PANTALLA.blit(caminaIzquierda[cuenta_pasos//1], (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60))
+        PANTALLA.blit(caminaIzquierda[cuenta_pasos//1], (pos_actual_ninja[1]*60 - (20 * cuenta_pasos), pos_actual_ninja[0]*60))
         pygame.display.update()
         reloj.tick(velocidad)
         pos_actual_ninja = i
@@ -168,7 +171,7 @@ def ninja_movimiento():
 # Función para verificar si se hizo clic en el botón
 def verificar_clic(pos_mouse):
     global en_movimiento, lista_recorrido, recorridos_iter
-    coordenadas = Busqueda_Amplitud.busqueda_amplitud(matriz2.copy())
+    coordenadas = Busqueda_Amplitud.busqueda_amplitud(matriz2.copy())[0]
     if rectangulo_boton1.collidepoint(pos_mouse):
         if coordenadas is not None:
             lista_recorrido = []
@@ -180,7 +183,7 @@ def verificar_clic(pos_mouse):
         else:
             return "No hay solución"
     
-    coordenadas = Busqueda_A.busqueda_A(matriz3.copy())   
+    coordenadas = Busqueda_A.busqueda_A(matriz3.copy())[0]
     if rectangulo_boton2.collidepoint(pos_mouse):
         if coordenadas is not None:
             lista_recorrido = []
