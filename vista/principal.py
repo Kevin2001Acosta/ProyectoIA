@@ -9,9 +9,10 @@ from modelo import Busqueda_A
 
 # Leer el archivo de texto y convertirlo en una matriz
 
-matriz = np.loadtxt('../matrices/matriz1.txt', dtype=int)
+matriz_1 = np.loadtxt('../matrices/matriz1.txt', dtype=int)
 matriz_2 = np.loadtxt('../matrices/matriz2.txt', dtype=int)
-matriz = matriz_2
+matriz_3 = np.loadtxt('../matrices/matriz3.txt', dtype=int)
+matriz = matriz_3
 matriz2 = matriz.copy()
 matriz3 = matriz.copy()
 matriz_original = matriz.copy()
@@ -124,7 +125,7 @@ def ninja_movimiento():
         # Si ya no hay más movimientos, salir de la función
         en_movimiento = False
         return
-    velocidad = 3
+    velocidad = 5
     # arriba
     if i[0] < pos_actual_ninja[0]:
         PANTALLA.blit(camina_arriba_abajo[cuenta_pasos//1], (pos_actual_ninja[1]*60, pos_actual_ninja[0]*60 - (20 * cuenta_pasos)))
