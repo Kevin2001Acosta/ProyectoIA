@@ -9,9 +9,9 @@ from modelo import Busqueda_A
 
 # Leer el archivo de texto y convertirlo en una matriz
 
-matriz = np.loadtxt('../matrices/matriz1.txt', dtype=int)
-matriz_2 = np.loadtxt('../matrices/matriz2.txt', dtype=int)
-matriz = matriz_2
+matriz = np.loadtxt('./matrices/matriz1.txt', dtype=int)
+matriz_2 = np.loadtxt('./matrices/matriz2.txt', dtype=int)
+#matriz = matriz_2
 matriz2 = matriz.copy()
 matriz3 = matriz.copy()
 matriz_original = matriz.copy()
@@ -41,64 +41,66 @@ ALTO = 600
 PANTALLA = pygame.display.set_mode((ANCHO, ALTO))
 pygame.display.set_caption('Buscando el Shuringan por BFS y A*')
 
-fuente = pygame.font.SysFont("Century Gothic", 21, bold=True)
+fuente = pygame.font.SysFont("Century Gothic", 18, bold=True)
 text = fuente.render("BÚSQUEDA POR AMPLITUD", True, NEGRO)
 text3 = fuente.render("BÚSQUEDA POR A*", True, NEGRO)
+text4 = fuente.render("CREADOS:", True, NEGRO)
+text5 = fuente.render("EXPANDIDOS:", True, NEGRO)
 
 
-ninja_icon = pygame.transform.scale(pygame.image.load('../imagenes/ninja-icon.png'), (60, 60))
+ninja_icon = pygame.transform.scale(pygame.image.load('./imagenes/ninja-icon.png'), (60, 60))
 # icono del juego
 pygame.display.set_icon(ninja_icon)
 
 
 #ninja
 
-caminaDerecha = [pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right1.png'), (60, 60)),
-                 pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right2.png'), (60, 60)),
-                 pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right3.png'), (60, 60))]
+caminaDerecha = [pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right1.png'), (60, 60)),
+                 pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right2.png'), (60, 60)),
+                 pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right3.png'), (60, 60))]
 
-caminaIzquierda = [pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left1.png'), (60, 60)),
-                   pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left2.png'), (60, 60)),
-                   pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left3.png'), (60, 60))]
+caminaIzquierda = [pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left1.png'), (60, 60)),
+                   pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left2.png'), (60, 60)),
+                   pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left3.png'), (60, 60))]
 
-ninja_stop = pygame.transform.scale(pygame.image.load('../imagenes/ninja-stop.png'), (60, 60))
-ninja_salto = pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60))
-camina_arriba_abajo = [pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60)),
-                       pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60)),
-                       pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60))]
+ninja_stop = pygame.transform.scale(pygame.image.load('./imagenes/ninja-stop.png'), (60, 60))
+ninja_salto = pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60))
+camina_arriba_abajo = [pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60)),
+                       pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60)),
+                       pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60))]
 
 
-shuriken = pygame.transform.scale(pygame.image.load('../imagenes/shuriken.png'), (60, 60))
+shuriken = pygame.transform.scale(pygame.image.load('./imagenes/shuriken.png'), (60, 60))
 
-paisaje = pygame.transform.scale(pygame.image.load('../imagenes/paisajeNinja.png'), (600, 600)).convert()
+paisaje = pygame.transform.scale(pygame.image.load('./imagenes/paisajeNinja.png'), (600, 600)).convert()
 
-muro2 = pygame.transform.scale(pygame.image.load('../imagenes/muro2.jpg'), (60, 60))
+muro2 = pygame.transform.scale(pygame.image.load('./imagenes/muro2.jpg'), (60, 60))
 
-espacioVacioBottom = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-bottom.png'), (60, 60))
-espacioVacioTop = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-top.png'), (60, 60))
-espacioVacioLeft = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-left.png'), (60, 60))
-espacioVacioRight = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-right.png'), (60, 60))
+espacioVacioBottom = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-bottom.png'), (60, 60))
+espacioVacioTop = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-top.png'), (60, 60))
+espacioVacioLeft = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-left.png'), (60, 60))
+espacioVacioRight = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-right.png'), (60, 60))
 
 espacioVacioLeft.set_colorkey(BLANCO)
 espacioVacioRight.set_colorkey(BLANCO)
 espacioVacioTop.set_colorkey(BLANCO)
 espacioVacioBottom.set_colorkey(BLANCO)
 
-espacioVacio2 = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio.png'), (60, 60))
+espacioVacio2 = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio.png'), (60, 60))
 espacioVacio2.set_colorkey(BLANCO)
 
-imagen_boton = pygame.transform.scale(pygame.image.load("../imagenes/boton.png"), (110, 80))
-imagen_boton2 = pygame.transform.scale(pygame.image.load("../imagenes/boton.png"), (110, 80))
+imagen_boton = pygame.transform.scale(pygame.image.load("./imagenes/boton.png"), (90, 60))
+imagen_boton2 = pygame.transform.scale(pygame.image.load("./imagenes/boton.png"), (90, 60))
 
 
 # Obtener el rectángulo de la imagen del botón
 rectangulo_boton1 = imagen_boton.get_rect()
-rectangulo_boton1.center = (740, 90)
+rectangulo_boton1.center = (740, 75)
 
 rectangulo_boton2 = imagen_boton2.get_rect()
-rectangulo_boton2.center = (740, 215)
+rectangulo_boton2.center = (740, 155)
 
-texto = ""
+texto = ["","",""]
 lista_recorrido = []
 
 def pos_ninja():
@@ -165,6 +167,9 @@ def ninja_movimiento():
 def verificar_clic(pos_mouse):
     global en_movimiento, lista_recorrido, recorridos_iter
     coordenadas = Busqueda_Amplitud.busqueda_amplitud(matriz2.copy())[0]
+    creados = Busqueda_Amplitud.busqueda_amplitud(matriz2.copy())[2]
+    expandidos = Busqueda_Amplitud.busqueda_amplitud(matriz2.copy())[1]
+    
     if rectangulo_boton1.collidepoint(pos_mouse):
         if coordenadas is not None:
             lista_recorrido = []
@@ -172,11 +177,13 @@ def verificar_clic(pos_mouse):
             recorridos_iter = iter(lista_recorrido)
             texto = ", ".join(map(str, coordenadas))
             en_movimiento = True
-            return texto
+            return [texto, creados, expandidos]
         else:
-            return "No hay solución"
+            return ["No hay solución", creados, expandidos]
     
     coordenadas = Busqueda_A.busqueda_A(matriz3.copy())[0]
+    creados = Busqueda_A.busqueda_A(matriz2.copy())[2]
+    expandidos = Busqueda_A.busqueda_A(matriz2.copy())[1]
     if rectangulo_boton2.collidepoint(pos_mouse):
         if coordenadas is not None:
             lista_recorrido = []
@@ -184,9 +191,9 @@ def verificar_clic(pos_mouse):
             recorridos_iter = iter(lista_recorrido)
             texto = ", ".join(map(str, coordenadas))
             en_movimiento = True
-            return texto
+            return [texto, creados, expandidos]
         else:
-            return "No hay solución"
+            return ["No hay solución", creados, expandidos]
     
     else:
         return ""
@@ -225,7 +232,7 @@ def dividir_texto_en_lineas(texto, max_width):
 
 def mostrar_texto_y_rectangulo(texto):
     
-    x, y, width, height = 632, 275, 240, 190
+    x, y, width, height = 632, 290, 240, 280
     
     tamano_fuente = 15
     fuente = pygame.font.SysFont("consolas", tamano_fuente)
@@ -262,6 +269,31 @@ def mostrar_texto_y_rectangulo(texto):
         
         # Aumentar la posición y para la siguiente línea
         y += texto_rect.height  
+        
+
+def mostrar_nodos_y_rectangulo(nodosCreados, nodosExpandidos):
+    
+    x1, y1 = 750, 190 
+    x2, y2 = 750, 230
+    width, height = 100, 30
+    tamano_fuente = 15
+    fuente = pygame.font.SysFont("consolas", tamano_fuente)
+
+    for (x, y), info in [((x1, y1), nodosCreados), ((x2, y2), nodosExpandidos)]:
+        rectangulo = pygame.Rect(x, y, width, height)
+        pygame.draw.rect(PANTALLA, BLANCO, rectangulo)
+        pygame.draw.rect(PANTALLA, COLOR2, (x, y, width, height))
+        
+        border_width = 3  
+        inner_rect = pygame.Rect(x + border_width, y + border_width, width - 2 * border_width, height - 2 * border_width)
+
+        pygame.draw.rect(PANTALLA, BLANCO, inner_rect)
+
+        texto = fuente.render(str(info), True, NEGRO)
+        
+        texto_rect = texto.get_rect(center=(x + width // 2, y + height // 2))
+
+        PANTALLA.blit(texto, texto_rect)
 
 
 imagenes = {0: muro2, 1: espacioVacio2,
@@ -290,12 +322,15 @@ def recarga_pantalla(informacion):
     for y in range(0, 600, 60):
         pygame.draw.line(PANTALLA, NEGRO, (0, y), (600, y))
     
-    PANTALLA.blit(text, (620, 25))
-    PANTALLA.blit(text3, (650, 150))
+    PANTALLA.blit(text, (640, 25))
+    PANTALLA.blit(text3, (670, 105))
+    PANTALLA.blit(text4, (620, 190))
+    PANTALLA.blit(text5, (620, 235))
     
     pygame.draw.rect(PANTALLA, AZULCLARO, (0, 600, 200, 200))
     
-    mostrar_texto_y_rectangulo(informacion)
+    mostrar_texto_y_rectangulo(informacion[0])
+    mostrar_nodos_y_rectangulo(informacion[1], informacion[2])
 
         
     PANTALLA.blit(imagen_boton, rectangulo_boton1)
