@@ -10,7 +10,6 @@ def busqueda_amplitud(matriz):
     for fila in range(0, matriz.shape[0]):
         for columna in range(0, matriz.shape[1]):
             if matriz[fila][columna] == 7:
-                print(fila, columna)
                 ninja_posx = fila
                 ninja_posy = columna
                 matriz[fila][columna] = 1
@@ -27,7 +26,6 @@ def busqueda_amplitud(matriz):
     nodos_expandidos = 0
     nodos_creados = 1
     while True:
-        print(len(cola))
         if len(cola) == 0:
             return [None, nodos_expandidos, nodos_creados]
 

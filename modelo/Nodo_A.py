@@ -21,7 +21,6 @@ class Nodo:
         valorNodo = self.matriz[self.x, self.y]
 
         def crear_hijo(hijox, hijoy):
-            print(hijox, hijoy)
             tupla = (self.x, self.y)
             lista_marcados.append(tupla)
             if not (hijox, hijoy) in lista_marcados:
@@ -35,7 +34,6 @@ class Nodo:
         y = self.y
         if 0 <= x < self.matriz.shape[1] and 0 <= y < self.matriz.shape[0] and valorNodo != 5:
             if not (self.matriz[x][y] == 0 or self.matriz[x][y] == 4):
-                print('hijo de arriba de: ', self.x, self.y, (x, y))
                 crear_hijo(x, y)
 
         # hijos de la derecha
@@ -43,7 +41,6 @@ class Nodo:
         y = self.y + 1
         if 0 <= x < self.matriz.shape[1] and 0 <= y < self.matriz.shape[0] and valorNodo != 2:
             if not (self.matriz[x][y] == 0 or self.matriz[x][y] == 3):
-                print('hijo de derecha de: ', self.x, self.y, (x, y))
                 crear_hijo(x, y)
 
         # hijos de abajo
@@ -51,7 +48,6 @@ class Nodo:
         y = self.y
         if 0 <= x < self.matriz.shape[1] and 0 <= y < self.matriz.shape[0] and valorNodo != 4:
             if not (self.matriz[x][y] == 0 or self.matriz[x][y] == 5):
-                print('hijo de abajo de: ', self.x, self.y, (x, y))
                 crear_hijo(x, y)
 
         # hijos de la izquierda
@@ -59,7 +55,6 @@ class Nodo:
         y = self.y - 1
         if 0 <= x < self.matriz.shape[1] and 0 <= y < self.matriz.shape[0] and valorNodo != 3:
             if not (self.matriz[x][y] == 0 or self.matriz[x][y] == 2):
-                print('hijo de izquierda de: ', self.x, self.y, (x, y))
                 crear_hijo(x, y)
         return hijos
 
