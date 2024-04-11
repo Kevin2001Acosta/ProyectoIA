@@ -40,7 +40,6 @@ def busqueda_A(matriz):
         nodos_expandidos += 1
 
         if nodo_cola.verificar_ganar():
-            print('busqueda A*', nodos_expandidos, nodos_creados)
             return nodo_cola.recorrido, nodos_expandidos, nodos_creados
 
         hijos = nodo_cola.generar_hijos()

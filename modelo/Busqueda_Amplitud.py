@@ -31,9 +31,7 @@ def busqueda_amplitud(matriz):
 
         nodo_cola = cola.pop(0)
         nodos_expandidos += 1
-        # print(nodo_cola.x, nodo_cola.y)
         if nodo_cola.verificar_ganar():
-            print('Busqueda Amplitud', nodos_expandidos, nodos_creados)
             return [nodo_cola.recorrido, nodos_expandidos, nodos_creados]
 
         hijos = nodo_cola.generar_hijos()

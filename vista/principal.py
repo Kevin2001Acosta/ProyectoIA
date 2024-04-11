@@ -9,10 +9,11 @@ from modelo import Busqueda_A
 
 # Leer el archivo de texto y convertirlo en una matriz
 
-matriz_1 = np.loadtxt('./matrices/matriz1.txt', dtype=int)
-matriz_2 = np.loadtxt('./matrices/matriz2.txt', dtype=int)
-matriz_3 = np.loadtxt('./matrices/matriz3.txt', dtype=int)
-matriz = matriz_3
+matriz_1 = np.loadtxt('../matrices/matriz1.txt', dtype=int)
+matriz_2 = np.loadtxt('../matrices/matriz2.txt', dtype=int)
+matriz_3 = np.loadtxt('../matrices/matriz3.txt', dtype=int)
+matriz_4 = np.loadtxt('../matrices/matriz4.txt', dtype=int)
+matriz = matriz_4
 matriz2 = matriz.copy()
 matriz3 = matriz.copy()
 matriz_original = matriz.copy()
@@ -49,49 +50,49 @@ text4 = fuente.render("CREADOS:", True, NEGRO)
 text5 = fuente.render("EXPANDIDOS:", True, NEGRO)
 
 
-ninja_icon = pygame.transform.scale(pygame.image.load('./imagenes/ninja-icon.png'), (60, 60))
+ninja_icon = pygame.transform.scale(pygame.image.load('../imagenes/ninja-icon.png'), (60, 60))
 # icono del juego
 pygame.display.set_icon(ninja_icon)
 
 
 #ninja
 
-caminaDerecha = [pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right1.png'), (60, 60)),
-                 pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right2.png'), (60, 60)),
-                 pygame.transform.scale(pygame.image.load('./imagenes/ninjas-right3.png'), (60, 60))]
+caminaDerecha = [pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right1.png'), (60, 60)),
+                 pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right2.png'), (60, 60)),
+                 pygame.transform.scale(pygame.image.load('../imagenes/ninjas-right3.png'), (60, 60))]
 
-caminaIzquierda = [pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left1.png'), (60, 60)),
-                   pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left2.png'), (60, 60)),
-                   pygame.transform.scale(pygame.image.load('./imagenes/ninjas-left3.png'), (60, 60))]
+caminaIzquierda = [pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left1.png'), (60, 60)),
+                   pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left2.png'), (60, 60)),
+                   pygame.transform.scale(pygame.image.load('../imagenes/ninjas-left3.png'), (60, 60))]
 
-ninja_stop = pygame.transform.scale(pygame.image.load('./imagenes/ninja-stop.png'), (60, 60))
-ninja_salto = pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60))
-camina_arriba_abajo = [pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60)),
-                       pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60)),
-                       pygame.transform.scale(pygame.image.load('./imagenes/ninja-salto.png'), (60, 60))]
+ninja_stop = pygame.transform.scale(pygame.image.load('../imagenes/ninja-stop.png'), (60, 60))
+ninja_salto = pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60))
+camina_arriba_abajo = [pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60)),
+                       pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60)),
+                       pygame.transform.scale(pygame.image.load('../imagenes/ninja-salto.png'), (60, 60))]
 
 
-shuriken = pygame.transform.scale(pygame.image.load('./imagenes/shuriken.png'), (60, 60))
+shuriken = pygame.transform.scale(pygame.image.load('../imagenes/shuriken.png'), (60, 60))
 
-paisaje = pygame.transform.scale(pygame.image.load('./imagenes/paisajeNinja.png'), (600, 600)).convert()
+paisaje = pygame.transform.scale(pygame.image.load('../imagenes/paisajeNinja.png'), (600, 600)).convert()
 
-muro2 = pygame.transform.scale(pygame.image.load('./imagenes/muro2.jpg'), (60, 60))
+muro2 = pygame.transform.scale(pygame.image.load('../imagenes/muro2.jpg'), (60, 60))
 
-espacioVacioBottom = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-bottom.png'), (60, 60))
-espacioVacioTop = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-top.png'), (60, 60))
-espacioVacioLeft = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-left.png'), (60, 60))
-espacioVacioRight = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio-right.png'), (60, 60))
+espacioVacioBottom = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-bottom.png'), (60, 60))
+espacioVacioTop = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-top.png'), (60, 60))
+espacioVacioLeft = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-left.png'), (60, 60))
+espacioVacioRight = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio-right.png'), (60, 60))
 
 espacioVacioLeft.set_colorkey(BLANCO)
 espacioVacioRight.set_colorkey(BLANCO)
 espacioVacioTop.set_colorkey(BLANCO)
 espacioVacioBottom.set_colorkey(BLANCO)
 
-espacioVacio2 = pygame.transform.scale(pygame.image.load('./imagenes/espacio-vacio.png'), (60, 60))
+espacioVacio2 = pygame.transform.scale(pygame.image.load('../imagenes/espacio-vacio.png'), (60, 60))
 espacioVacio2.set_colorkey(BLANCO)
 
-imagen_boton = pygame.transform.scale(pygame.image.load("./imagenes/boton.png"), (90, 60))
-imagen_boton2 = pygame.transform.scale(pygame.image.load("./imagenes/boton.png"), (90, 60))
+imagen_boton = pygame.transform.scale(pygame.image.load("../imagenes/boton.png"), (90, 60))
+imagen_boton2 = pygame.transform.scale(pygame.image.load("../imagenes/boton.png"), (90, 60))
 
 
 # Obtener el rectángulo de la imagen del botón
